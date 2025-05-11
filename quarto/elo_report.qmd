@@ -8,12 +8,14 @@ execute:
 
 ```{r message = FALSE, warning = FALSE}
 #libraries
-library(tidyverse)
+library(dplyr)
 library(lubridate)
 library(DT)
 library(plotly)
 library(baseballr)
 library(knitr)
+library(readr)
+library(tidyr)
 ```
 
 ```{r}
