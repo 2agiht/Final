@@ -20,7 +20,7 @@ library(tidyr)
 
 ```{r}
 #read_csv
-df = read_csv("data/elo_ratings.csv", show_col_types = FALSE)
+df = read_csv("../data/elo_ratings.csv", show_col_types = FALSE)
 # Safely check for structure
 invalid_data = ncol(df) < 31 || nrow(df) < 2 || all(is.na(df$date))
 
