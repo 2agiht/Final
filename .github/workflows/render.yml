@@ -31,7 +31,7 @@ jobs:
 
       - name: Install R packages
         run: |
-          Rscript -e 'install.packages(c("dplyr", "readr", "quarto", "remotes", "lubridate", "DT", "plotly", "baseballr", "knitr"))'
+          Rscript -e 'install.packages(c("dplyr", "readr", "quarto", "remotes", "lubridate", "DT", "plotly", "baseballr", "knitr", "tidyr"))'
 
       - name: Install GitHub packages
         run: |
