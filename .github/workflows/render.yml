@@ -49,10 +49,10 @@ jobs:
           git push
 
       - name: Render Quarto site
-        run: quarto render quarto/
+        run: quarto render 
 
       - name: Publish to GitHub Pages
         uses: quarto-dev/quarto-actions/publish@v2
         with:
-          path: quarto/_site
+          path: _site
           target: gh-pages
