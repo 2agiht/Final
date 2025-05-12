@@ -8,6 +8,10 @@ website:
     left:
       - text: "Home"
         file: elo_report.qmd
+      - text: "Divisions"
+        file: elo_divisions.qmd
+      - text: "About ELO"
+        file: about_elo.qmd
 
 format:
   html:
