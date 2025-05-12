@@ -18,7 +18,7 @@ library(readr)
 library(tidyr)
 ```
 
-Last updated: `r format(Sys.time(), "%m/%d/%Y %H:%M %Z")` (UTC)
+Last updated: `r format(Sys.time(), "%m/%d/%Y %H:%M %Z")`
 
 ```{r}
 #read_csv
@@ -68,7 +68,7 @@ elo_7d <- df %>%
 ```
 
 ::: {style="margin-top: 40px;"}
-Elo All Teams
+Elo for All Teams
 :::
 
 ```{r}
@@ -103,170 +103,4 @@ in_df_format <- elo_today %>%
   arrange(desc(Elo))
 
 datatable(as.data.frame(in_df_format), options = list(pageLength = 10))
-```
-
-```{r}
-#get division names for separating teams 
-teams = mlb_teams()%>% 
-  filter(sport_id == 1)
-division = teams %>% 
-  select(division_name) 
-division = unique(division$division_name)
-division
-```
-
-::: {style="margin-top: 40px;"}
-##American League East
-:::
-
-```{r message = FALSE}
-ALE = teams %>% 
-  filter(division_name == division[3]) %>% 
-  select(team_full_name)
-```
-
-```{r}
-ALE_plot = ggplot(elo_data %>% filter(Team %in% ALE$team_full_name), aes(x = date, y = Elo, color = Team)) +
-  geom_line(alpha = 0.7) +
-  theme_minimal() +
-  theme(
-    legend.position = "none"
-  )
-ggplotly(ALE_plot)
-```
-
-```{r}
-ALE_df = in_df_format %>% 
-  filter(Teams %in% ALE$team_full_name)
-datatable(as.data.frame(ALE_df))
-```
-
-::: {style="margin-top: 40px;"}
-##American League Central
-:::
-
-```{r}
-ALC = teams %>% 
-  filter(division_name == division[5]) %>% 
-  select(team_full_name)
-```
-
-```{r}
-ALC_plot = ggplot(elo_data %>% filter(Team %in% ALC$team_full_name), aes(x = date, y = Elo, color = Team)) +
-  geom_line(alpha = 0.7) +
-  theme_minimal() +
-  theme(
-    legend.position = "none"
-  )
-ggplotly(ALC_plot)
-```
-
-```{r}
-ALC_df = in_df_format %>% 
-  filter(Teams %in% ALC$team_full_name)
-datatable(as.data.frame(ALC_df))
-```
-
-::: {style="margin-top: 40px;"}
-##American League West
-:::
-
-```{r}
-ALW = teams %>% 
-  filter(division_name == division[1]) %>% 
-  select(team_full_name)
-```
-
-```{r}
-ALW_plot = ggplot(elo_data %>% filter(Team %in% ALW$team_full_name), aes(x = date, y = Elo, color = Team)) +
-  geom_line(alpha = 0.7) +
-  theme_minimal() +
-  theme(
-    legend.position = "none"
-  )
-ggplotly(ALW_plot)
-```
-
-```{r}
-ALW_df = in_df_format %>% 
-  filter(Teams %in% ALW$team_full_name)
-datatable(as.data.frame(ALW_df))
-```
-
-::: {style="margin-top: 40px;"}
-##National League East
-:::
-
-```{r}
-NLE = teams %>% 
-  filter(division_name == division[6]) %>% 
-  select(team_full_name)
-```
-
-```{r}
-NLE_plot = ggplot(elo_data %>% filter(Team %in% NLE$team_full_name), aes(x = date, y = Elo, color = Team)) +
-  geom_line(alpha = 0.7) +
-  theme_minimal() +
-  theme(
-    legend.position = "none"
-  )
-ggplotly(NLE_plot)
-```
-
-```{r}
-NLE_df = in_df_format %>% 
-  filter(Teams %in% NLE$team_full_name)
-datatable(as.data.frame(NLE_df))
-```
-
-::: {style="margin-top: 40px;"}
-##National League Central
-:::
-
-```{r}
-NLC = teams %>% 
-  filter(division_name == division[4]) %>% 
-  select(team_full_name)
-```
-
-```{r}
-NLC_plot = ggplot(elo_data %>% filter(Team %in% NLC$team_full_name), aes(x = date, y = Elo, color = Team)) +
-  geom_line(alpha = 0.7) +
-  theme_minimal() +
-  theme(
-    legend.position = "none"
-  )
-ggplotly(NLC_plot)
-```
-
-```{r}
-NLC_df = in_df_format %>% 
-  filter(Teams %in% NLC$team_full_name)
-datatable(as.data.frame(NLC_df))
-```
-
-::: {style="margin-top: 40px;"}
-##National League West
-:::
-
-```{r}
-NLW = teams %>% 
-  filter(division_name == division[2]) %>% 
-  select(team_full_name)
-```
-
-```{r}
-NLW_plot = ggplot(elo_data %>% filter(Team %in% NLW$team_full_name), aes(x = date, y = Elo, color = Team)) +
-  geom_line(alpha = 0.7) +
-  theme_minimal() +
-  theme(
-    legend.position = "none"
-  )
-ggplotly(NLW_plot)
-```
-
-```{r}
-NLW_df = in_df_format %>% 
-  filter(Teams %in% NLW$team_full_name)
-datatable(as.data.frame(NLW_df))
 ```
