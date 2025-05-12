@@ -1,9 +1,23 @@
 [
   {
+    "objectID": "about_elo.html",
+    "href": "about_elo.html",
+    "title": "About ELO",
+    "section": "",
+    "text": "About ELO\n\nELO is a rating system used to calculate skills, initially originating from games without measuring winning scores. It originated from chess and is very commonly used in esports. Since then, it has also been implemented across soccer, football, basketball, pool, board games, and baseball. The system is designed so that every player (or team) starts at an equal level, and when they compete against each other, their ratings are determined to go up or down based on whether they win or lose the match. The new score is then determined by multiple factors, including the initial rating of both parties coming into the game, who wins or loses, and how many games are played (i.e., games in a season). The formula for the rating has been changed over time and can differ across sports. In more elaborate and well-funded cases, the final score of a game can also be accounted for. More information about the general system can be found on the ELO Wikipedia.\n\nAbout the Team & Project\n\nOur team was comprised of Tatsuya Higashiomori, Noah Clark, and Zachary Barnes. This project was based on our previous project, for the class STAT 430: Baseball Analytics. Our current ELO system was largely designed and coded by Tatsuya, who accounted for the complexities of the system by assigning different sections of the season different importance levels and wrote the code from scratch. This was based on the ELO rating we used from a previous project, but was manually coded instead of being obtained from a library in R, because ELO trend data is typically not stored using pre-coded libraries. Thanks to Professor Daniel Eck for allowing us to have this be our final and Professor David Dalpiaz for guidance on the content and formatting."
+  },
+  {
     "objectID": "elo_report.html",
     "href": "elo_report.html",
     "title": "Elo Rating",
     "section": "",
-    "text": "Last updated: 05/12/2025 02:20 UTC (UTC)\n\nElo All Teams\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[1] \"American League West\"    \"National League West\"   \n[3] \"American League East\"    \"National League Central\"\n[5] \"American League Central\" \"National League East\"   \n\n\n\n##American League East\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n##American League Central\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n##American League West\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n##National League East\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n##National League Central\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n##National League West"
+    "text": "Last updated: 05/12/2025 06:45 UTC\n\nElo for All Teams"
+  },
+  {
+    "objectID": "elo_divisions.html",
+    "href": "elo_divisions.html",
+    "title": "Elo Rating by Division",
+    "section": "",
+    "text": "Last updated: 05/12/2025 06:45 UTC\n\nAmerican League East\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAmerican League Central\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAmerican League West\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNational League East\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNational League Central\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNational League West"
   }
 ]
