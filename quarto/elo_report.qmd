@@ -18,6 +18,8 @@ library(readr)
 library(tidyr)
 ```
 
+Last updated: `r format(Sys.time(), "%m/%d/%Y %H:%M %Z")` (UTC)
+
 ```{r}
 #read_csv
 df = read_csv("../data/elo_ratings.csv", show_col_types = FALSE)
