@@ -1,0 +1,250 @@
+---
+title: "Elo Rating by Division"
+format: html
+editor: visual
+execute:
+  echo: false
+---
+
+```{r message = FALSE, warning = FALSE}
+#libraries
+library(dplyr)
+library(lubridate)
+library(DT)
+library(plotly)
+library(baseballr)
+library(knitr)
+library(readr)
+library(tidyr)
+```
+
+Last updated: `r format(Sys.time(), "%m/%d/%Y %H:%M %Z")`
+
+```{r}
+#read_csv
+df = read_csv("../data/elo_ratings.csv", show_col_types = FALSE)
+# Safely check for structure
+invalid_data = ncol(df) < 31 || nrow(df) < 2 || all(is.na(df$date))
+
+if (invalid_data) {
+  cat("## Waiting for game data — please come again later.\n")
+  knit_exit()
+}
+```
+
+```{r}
+#reformatting csv for later plot
+elo_data = df %>% 
+  filter(!is.na(date)) %>% 
+  mutate(date = ymd(date)) %>% 
+  pivot_longer(
+    cols = -date,
+    names_to = "Team",
+    values_to = "Elo"
+  )
+
+#get latest date. 
+latest_date = max(elo_data$date)
+
+#latest elo
+elo_today <- df %>%
+  filter(date == latest_date) %>%
+  pivot_longer(-date, names_to = "Teams", values_to = "Elo_today")
+
+#elo from one day ago
+elo_1d <- df %>%
+  filter(date == (latest_date - 1)) %>%
+  pivot_longer(-date, names_to = "Teams", values_to = "Elo_1d")
+
+#elo from 7 days ago
+elo_7d <- df %>%
+  filter(date == (latest_date - 7)) %>%
+  pivot_longer(-date, names_to = "Teams", values_to = "Elo_7d")
+
+#latest_elo = elo_data %>% 
+#  group_by(Team) %>% 
+#  filter(date == max(date)) %>% 
+#  ungroup()
+```
+
+```{r}
+#get division names for separating teams 
+teams = mlb_teams()%>% 
+  filter(sport_id == 1)
+division = teams %>% 
+  select(division_name) 
+division = unique(division$division_name)
+```
+
+```{r}
+in_df_format <- elo_today %>%
+  left_join(elo_1d, by = "Teams") %>%
+  left_join(elo_7d, by = "Teams") %>%
+  mutate(
+    ΔElo_1d  = round(Elo_today - Elo_1d, digits = 2),
+    ΔElo_7d = round(Elo_today - Elo_7d, digits = 2)
+  ) %>%
+  # Optional: replace NA with 0 or a message
+  mutate(
+    ΔElo_1d  = ifelse(is.na(ΔElo_1d), 0, ΔElo_1d),
+    ΔElo_7d = ifelse(is.na(ΔElo_7d), 0, ΔElo_7d)
+  ) %>%
+  select(Teams, Elo = Elo_today, ΔElo_1d , ΔElo_7d) %>%
+  arrange(desc(Elo))
+```
+
+::: {style="margin-top: 40px;"}
+American League East
+:::
+
+```{r message = FALSE}
+ALE = teams %>% 
+  filter(division_name == division[3]) %>% 
+  select(team_full_name)
+```
+
+```{r}
+ALE_plot = ggplot(elo_data %>% filter(Team %in% ALE$team_full_name), aes(x = date, y = Elo, color = Team)) +
+  geom_line(alpha = 0.7) +
+  theme_minimal() +
+  theme(
+    legend.position = "none"
+  )
+ggplotly(ALE_plot)
+```
+
+```{r}
+ALE_df = in_df_format %>% 
+  filter(Teams %in% ALE$team_full_name)
+datatable(as.data.frame(ALE_df))
+```
+
+::: {style="margin-top: 40px;"}
+American League Central
+:::
+
+```{r}
+ALC = teams %>% 
+  filter(division_name == division[5]) %>% 
+  select(team_full_name)
+```
+
+```{r}
+ALC_plot = ggplot(elo_data %>% filter(Team %in% ALC$team_full_name), aes(x = date, y = Elo, color = Team)) +
+  geom_line(alpha = 0.7) +
+  theme_minimal() +
+  theme(
+    legend.position = "none"
+  )
+ggplotly(ALC_plot)
+```
+
+```{r}
+ALC_df = in_df_format %>% 
+  filter(Teams %in% ALC$team_full_name)
+datatable(as.data.frame(ALC_df))
+```
+
+::: {style="margin-top: 40px;"}
+American League West
+:::
+
+```{r}
+ALW = teams %>% 
+  filter(division_name == division[1]) %>% 
+  select(team_full_name)
+```
+
+```{r}
+ALW_plot = ggplot(elo_data %>% filter(Team %in% ALW$team_full_name), aes(x = date, y = Elo, color = Team)) +
+  geom_line(alpha = 0.7) +
+  theme_minimal() +
+  theme(
+    legend.position = "none"
+  )
+ggplotly(ALW_plot)
+```
+
+```{r}
+ALW_df = in_df_format %>% 
+  filter(Teams %in% ALW$team_full_name)
+datatable(as.data.frame(ALW_df))
+```
+
+::: {style="margin-top: 40px;"}
+National League East
+:::
+
+```{r}
+NLE = teams %>% 
+  filter(division_name == division[6]) %>% 
+  select(team_full_name)
+```
+
+```{r}
+NLE_plot = ggplot(elo_data %>% filter(Team %in% NLE$team_full_name), aes(x = date, y = Elo, color = Team)) +
+  geom_line(alpha = 0.7) +
+  theme_minimal() +
+  theme(
+    legend.position = "none"
+  )
+ggplotly(NLE_plot)
+```
+
+```{r}
+NLE_df = in_df_format %>% 
+  filter(Teams %in% NLE$team_full_name)
+datatable(as.data.frame(NLE_df))
+```
+
+::: {style="margin-top: 40px;"}
+National League Central
+:::
+
+```{r}
+NLC = teams %>% 
+  filter(division_name == division[4]) %>% 
+  select(team_full_name)
+```
+
+```{r}
+NLC_plot = ggplot(elo_data %>% filter(Team %in% NLC$team_full_name), aes(x = date, y = Elo, color = Team)) +
+  geom_line(alpha = 0.7) +
+  theme_minimal() +
+  theme(
+    legend.position = "none"
+  )
+ggplotly(NLC_plot)
+```
+
+```{r}
+NLC_df = in_df_format %>% 
+  filter(Teams %in% NLC$team_full_name)
+datatable(as.data.frame(NLC_df))
+```
+
+::: {style="margin-top: 40px;"}
+National League West
+:::
+
+```{r}
+NLW = teams %>% 
+  filter(division_name == division[2]) %>% 
+  select(team_full_name)
+```
+
+```{r}
+NLW_plot = ggplot(elo_data %>% filter(Team %in% NLW$team_full_name), aes(x = date, y = Elo, color = Team)) +
+  geom_line(alpha = 0.7) +
+  theme_minimal() +
+  theme(
+    legend.position = "none"
+  )
+ggplotly(NLW_plot)
+```
+
+```{r}
+NLW_df = in_df_format %>% 
+  filter(Teams %in% NLW$team_full_name)
+datatable(as.data.frame(NLW_df))
+```
